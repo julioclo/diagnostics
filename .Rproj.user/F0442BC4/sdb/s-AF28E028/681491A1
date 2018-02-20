@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"diagnostics\"\nauthor: \"Julio Lopez\"\ndate: \"2/20/2018\"\noutput: ioslides_presentation\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = TRUE)\n```\n\n## Test\n\n```{r load_things, message=FALSE, echo=TRUE}\n# install ggfortify\nlibrary(ggfortify)\nlibrary(tidyverse)\n\nmy_cars_data <- read_csv(\"../data/my_data.csv\")\nhead(my_cars_data)\n```\n\n\n## Model\n\n```{r model, echo=TRUE}\nmod1 <- lm(mpg ~ wt, data = mtcars)\nsummary(mod1)$coef\n```\n\n## assumption\n### association is linear\n\n```{r, fig.width=8, echo=FALSE}\nmtcars %>%\n  ggplot(., aes(x = wt, y = mpg)) +\n  geom_point() +\n  geom_smooth(method = lm, formula = y ~ poly(x, 2))\n```\n\n##the mean of residuals is zero\n\n```{r}\nmean(mod1$residuals)\n```\n\n## homoeskedasticy\n\n```{r}\nautoplot(mod1, which = c(1, 3))\n```\n\n## no autocorrelation\n```{r}\nacf(mod1$residuals)\n```\n\n## normality of residuals\n```{r}\nautoplot(mod1, which = 2)\n```\n\n",
+    "created" : 1519145970845.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2732062185",
+    "id" : "681491A1",
+    "lastKnownWriteTime" : 1519147061,
+    "last_content_update" : 1519147061733,
+    "path" : "~/Desktop/diagnostics/slides/index.Rmd",
+    "project_path" : "slides/index.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

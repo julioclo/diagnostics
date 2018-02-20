@@ -1,0 +1,62 @@
+---
+title: "diagnostics"
+author: "Julio Lopez"
+date: "2/20/2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Test
+
+```{r load_things, message=FALSE, echo=TRUE}
+# install ggfortify
+library(ggfortify)
+library(tidyverse)
+
+my_cars_data <- read_csv("../data/my_data.csv")
+head(my_cars_data)
+```
+
+
+## Model
+
+```{r model, echo=TRUE}
+mod1 <- lm(mpg ~ wt, data = mtcars)
+summary(mod1)$coef
+```
+
+## assumption
+### association is linear
+
+```{r, fig.width=8, echo=FALSE}
+mtcars %>%
+  ggplot(., aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth(method = lm, formula = y ~ poly(x, 2))
+```
+
+##the mean of residuals is zero
+
+```{r}
+mean(mod1$residuals)
+```
+
+## homoeskedasticy
+
+```{r}
+autoplot(mod1, which = c(1, 3))
+```
+
+## no autocorrelation
+```{r}
+acf(mod1$residuals)
+```
+
+## normality of residuals
+```{r}
+autoplot(mod1, which = 2)
+```
+
